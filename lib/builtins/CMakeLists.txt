@@ -501,6 +501,12 @@ else ()
         set(_arch "i386|i686")
       endif()
 
+      # Disable integrated-as since mc assembler is not fully complete for
+      # pseudo instructions.
+      if(("${arch}" STREQUAL "riscv32") OR ("${arch}" STREQUAL "riscv64"))
+        list(APPEND BUILTIN_CFLAGS -fno-integrated-as)
+      endif()
+
       # Filter out generic versions of routines that are re-implemented in
       # architecture specific manner.  This prevents multiple definitions of the
       # same symbols, making the symbol selection non-deterministic.
