@@ -462,6 +462,11 @@ set(riscv_SOURCES riscv/save-restore.S ${GENERIC_SOURCES} ${GENERIC_TF_SOURCES})
 set(riscv32_SOURCES ${riscv_SOURCES})
 set(riscv64_SOURCES ${riscv_SOURCES})
 
+check_symbol_exists(__riscv_mul "" RISCV_M_EXT)
+if (NOT RISCV_M_EXT)
+  list(APPEND riscv32_SOURCES riscv/mulsi3.S)
+endif ()
+
 set(wasm32_SOURCES ${GENERIC_SOURCES})
 set(wasm64_SOURCES ${GENERIC_SOURCES})
 
